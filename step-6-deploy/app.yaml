@@ -9,9 +9,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-runtime: custom
-vm: true
-api_version: 1
-module: default
+runtime: nodejs8
 env_variables:
   REDIRECT_URL: https://<project ID>.appspot.com/oauth2callback
