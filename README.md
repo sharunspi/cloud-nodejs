@@ -1,5 +1,7 @@
-# Google Cloud Platform Codelabs
+# Google Cloud Node.js Codelab
 
-This repository contains the source material for codelabs released at Google Cloud Platform Events. [Access the codelabs](https://gcplab.me/).
+This repository contains the source code for the Google Cloud getting started with Node.js Codelab.
+
+https://codelabs.developers.google.com/codelabs/cloud-nodejs
 
 *This is not an official Google product*
