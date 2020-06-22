@@ -10,7 +10,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
+// export constants for development
 module.exports = {
   projectId: '[your Google Developers Console project ID]',
   keyFilename: './key.json',

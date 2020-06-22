@@ -43,9 +43,9 @@ module.exports = function(config) {
   }
 
   return {
-    getAllBooks: getAllBooks,
-    getUserBooks: getUserBooks,
-    addBook: addBook,
-    deleteBook: deleteBook
+    getAllBooks,
+    getUserBooks,
+    addBook,
+    deleteBook
   };
 };

@@ -24,7 +24,7 @@ module.exports = function(config) {
   }
 
   return {
-    getAuthenticationUrl: getAuthenticationUrl,
-    getUser: getUser
+    getAuthenticationUrl,
+    getUser
   };
 };
