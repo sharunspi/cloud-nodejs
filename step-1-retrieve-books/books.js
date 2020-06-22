@@ -22,23 +22,23 @@ module.exports = function(config) {
     keyFilename: config.keyFilename
   });
 
-  function getAllBooks(callback) {
+  getAllBooks = (callback) => {
     var query = datastore.createQuery(['Book']);
     datastore.runQuery(query, (err, books) => callback(err, books, datastore.KEY));
   }
 
-  function getUserBooks(userId, callback) {
+  getUserBooks = (userId, callback) => {
     callback(new Error('books.getUserBooks [Not Yet Implemented]'));
   }
 
-  function addBook(title, author, coverImageData, userId, callback) {
+  addBook = (title, author, coverImageData, userId, callback) => {
     if (coverImageData)
       return callback(new Error('books.addBook with image [Not Yet Implemented]'));
 
     return callback(new Error('books.addBook [Not Yet Implemented]'));
   }
 
-  function deleteBook(bookId, callback) {
+  deleteBook = (bookId, callback) => {
     callback(new Error('books.deleteBook [Not Yet Implemented]'));
   }
 

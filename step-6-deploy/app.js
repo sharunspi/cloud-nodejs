@@ -34,8 +34,8 @@ app.use(multer({ inMemory: true }));
 app.use(session({ signed: true, secret: config.cookieSecret }));
 
 /* Fetch all books and display them */
-app.get('/', function(req, res, next) {
-  books.getAllBooks(function(err, books, key) {
+app.get('/', (req, res, next) => {
+  books.getAllBooks((err, books, key) => {
     if (err) return next(err);
     var keyBooks = books.map((book) => Object.assign(book, { id: book.id || book[key].id }));
     res.render('index', { books: keyBooks, user: req.session.user });
@@ -43,9 +43,9 @@ app.get('/', function(req, res, next) {
 });
 
 /* Fetch books created by the currently logged in user and display them */
-app.get('/mine', function(req, res, next) {
+app.get('/mine', (req, res, next)=> {
   if (! req.session.user) return res.redirect('/');
-  books.getUserBooks(req.session.user.id, function(err, books, key) {
+  books.getUserBooks(req.session.user.id, (err, books, key) => {
     if (err) return next(err);
     var keyBooks = books.map((book) => Object.assign(book, { id: book.id || book[key].id }));
     res.render('index', { books: keyBooks, user: req.session.user });
@@ -53,14 +53,14 @@ app.get('/mine', function(req, res, next) {
 });
 
 /* Redirect user to OAuth 2.0 login URL */
-app.get('/login', function(req, res) {
+app.get('/login', (req, res) => {
   var authenticationUrl = auth.getAuthenticationUrl();
   res.redirect(authenticationUrl);
 });
 
 /* Use OAuth 2.0 authorization code to fetch user's profile */
-app.get('/oauth2callback', function(req, res, next) {
-  auth.getUser(req.query.code, function(err, user) {
+app.get('/oauth2callback', (req, res, next) => {
+  auth.getUser(req.query.code, (err, user) => {
     if (err) return next(err);
     req.session.user = user;
     res.redirect('/');
@@ -68,13 +68,13 @@ app.get('/oauth2callback', function(req, res, next) {
 });
 
 /* Clear the session */
-app.get('/logout', function(req, res) {
+app.get('/logout', (req, res) => {
   req.session = null;
   res.redirect('/');
 });
 
 /* Add a new book */
-app.post('/books', function(req, res, next) {
+app.post('/books', (req, res, next) => {
   if (! req.body.title || ! req.body.author)
     return next(new Error('Must provide book Title and Author'));
 
@@ -86,21 +86,21 @@ app.post('/books', function(req, res, next) {
   if (req.session.user)
     userId = req.session.user.id;
 
-  books.addBook(req.body.title, req.body.author, coverImageData, userId, function(err) {
+  books.addBook(req.body.title, req.body.author, coverImageData, userId, (err) => {
     if (err) return next(err);
     res.redirect(req.get('Referer') || '/');
   })
 });
 
 /* Delete book by key */
-app.get('/books/delete', function(req, res, next) {
-  books.deleteBook(req.query.id, function(err) {
+app.get('/books/delete', (req, res, next) => {
+  books.deleteBook(req.query.id, (err) => {
     if (err) return next(err);
     res.redirect('/');
   });
 });
 
-app.get('/_ah/health', function(req, res) {
+app.get('/_ah/health', (req, res) => {
   res.type('text').send('ok');
 });
 

@@ -29,17 +29,17 @@ module.exports = function(config) {
 
   var bucket = storage.bucket(config.bucketName);
 
-  function getAllBooks(callback) {
+  getAllBooks = (callback) => {
     var query = datastore.createQuery(['Book']);
     datastore.runQuery(query, (err, books) => callback(err, books, datastore.KEY));
   }
 
-  function getUserBooks(userId, callback) {
+  getUserBooks = (userId, callback) => {
     var query = datastore.createQuery(['Book']).filter('userId', '=', userId);
     datastore.runQuery(query, (err, books) => callback(err, books, datastore.KEY));
   }
 
-  function addBook(title, author, coverImageData, userId, callback) {
+  addBook = (title, author, coverImageData, userId, callback) => {
     var entity = {
       key: datastore.key('Book'),
       data: {
@@ -61,7 +61,7 @@ module.exports = function(config) {
       datastore.save(entity, callback);
   }
 
-  function deleteBook(bookId, callback) {
+  deleteBook = (bookId, callback) => {
     var key = datastore.key(['Book', parseInt(bookId, 10)]);
 
     datastore.get(key, function(err, book) {
@@ -80,16 +80,16 @@ module.exports = function(config) {
     });
   }
 
-  function uploadCoverImage(coverImageData, callback) {
+  uploadCoverImage = (coverImageData, callback) => {
     // Generate a unique filename for this image
     var filename = '' + new Date().getTime() + "-" + Math.random()
     var file = bucket.file(filename);
     var imageUrl = 'https://' + config.bucketName + '.storage.googleapis.com/' + filename;
     var stream = file.createWriteStream();
     stream.on('error', callback);
-    stream.on('finish', function() {
+    stream.on('finish', () => {
       // Set this file to be publicly readable
-      file.makePublic(function(err) {
+      file.makePublic((err) => {
         if (err) return callback(err);
         callback(null, imageUrl);
       });
@@ -98,9 +98,9 @@ module.exports = function(config) {
   }
 
   return {
-    getAllBooks: getAllBooks,
-    getUserBooks: getUserBooks,
-    addBook: addBook,
-    deleteBook: deleteBook
+    getAllBooks,
+    getUserBooks,
+    addBook,
+    deleteBook
   };
 };

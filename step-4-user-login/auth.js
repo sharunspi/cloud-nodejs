@@ -15,7 +15,7 @@ module.exports = function(config) {
 
   var {google} = require('googleapis');
 
-  function getAuthenticationUrl() {
+  getAuthenticationUrl = () =>{
     var client = new google.auth.OAuth2(
       config.oauth2.clientId,
       config.oauth2.clientSecret,
@@ -25,7 +25,7 @@ module.exports = function(config) {
     return client.generateAuthUrl({ scope: ['profile'] });
   }
 
-  function getUser(authorizationCode, callback) {
+  getUser = (authorizationCode, callback) => {
     var client = new google.auth.OAuth2(
       config.oauth2.clientId,
       config.oauth2.clientSecret,
@@ -37,7 +37,7 @@ module.exports = function(config) {
       // Configure this Google API client to use the access token
       client.setCredentials(tokens);
       // Call the Google+ API to get the profile of the user who authenticated
-      google.plus('v1').people.get({ userId: 'me', auth: client }, function(err, profile) {
+      google.plus('v1').people.get({ userId: 'me', auth: client }, (err, profile) => {
         if (err) return callback(err);
         var user = {
           id: profile.data.id,
@@ -50,7 +50,7 @@ module.exports = function(config) {
   }
 
   return {
-    getAuthenticationUrl: getAuthenticationUrl,
-    getUser: getUser
+    getAuthenticationUrl,
+    getUser
   };
 };
